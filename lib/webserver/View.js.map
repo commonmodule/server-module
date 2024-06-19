@@ -1,0 +1,1 @@
+{"version":3,"file":"View.js","sourceRoot":"","sources":["../../src/webserver/View.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,OAAgB,IAAI;IACtB,MAAM,GAAG,KAAK,CAAC;IAElB,YAAY,CAAC,MAAkB,EAAE,GAAW,IAAS,CAAC;IACtD,KAAK;QACV,IAAI,CAAC,MAAM,GAAG,IAAI,CAAC;IACrB,CAAC;CACF"}
