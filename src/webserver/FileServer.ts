@@ -21,9 +21,7 @@ export default class FileServer extends WebServer {
     listener?: (context: HttpContext) => Promise<void>,
   ) {
     super(options, async (context) => {
-      if (listener !== undefined) {
-        await listener(context);
-      }
+      if (listener !== undefined) await listener(context);
       if (context.responsed !== true) {
         const filename = Path.basename(context.uri);
         if (filename.startsWith(".")) {
@@ -60,6 +58,10 @@ export default class FileServer extends WebServer {
     //TODO:
   }
 
+  protected modifyIndexFileContent(content: string): string {
+    return content;
+  }
+
   private async responseResource(context: HttpContext) {
     try {
       const contentType = FileServer.contentTypeFromPath(context.uri);
@@ -69,7 +71,7 @@ export default class FileServer extends WebServer {
       await context.response({ content, contentType });
     } catch (error) {
       try {
-        const indexFileContent = await FileUtil.readBuffer(
+        const indexFileContent = await FileUtil.readText(
           `${this.publicFolderPath}/${
             this.options.indexFilePath === undefined
               ? "index.html"
@@ -77,7 +79,7 @@ export default class FileServer extends WebServer {
           }`,
         );
         await context.response({
-          content: indexFileContent,
+          content: this.modifyIndexFileContent(indexFileContent),
           contentType: "text/html",
         });
       } catch (error) {

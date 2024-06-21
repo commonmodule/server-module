@@ -9,6 +9,7 @@ export default class FileServer extends WebServer {
         indexFilePath?: string;
     }, listener?: (context: HttpContext) => Promise<void>);
     private responseStream;
+    protected modifyIndexFileContent(content: string): string;
     private responseResource;
 }
 //# sourceMappingURL=FileServer.d.ts.map
