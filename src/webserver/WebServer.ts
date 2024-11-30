@@ -1,11 +1,11 @@
+import { EventContainer } from "@common-module/ts";
 import { exec } from "child_process";
 import * as HTTP from "http";
 import * as HTTPS from "https";
 import * as TLS from "tls";
 import { SecureContext } from "tls";
-import EventContainer from "../event/EventContainer.js";
-import FileUtil from "../util/FileUtil.js";
-import Logger from "../util/Logger.js";
+import FileUtil from "../utils/FileUtil.js";
+import Logger from "../utils/Logger.js";
 import HttpContext from "./HttpContext.js";
 
 type SSLInfo = { [domain: string]: { key: string; cert: string } };
@@ -21,7 +21,9 @@ export interface WebServerOptions {
   autoRenewCertbot?: boolean;
 }
 
-export default class WebServer extends EventContainer {
+export default class WebServer extends EventContainer<{
+  start: () => void;
+}> {
   private secureContextCache: { [domain: string]: SecureContext } = {};
   public rawServer: HTTPS.Server | HTTP.Server | undefined;
 
@@ -57,11 +59,10 @@ export default class WebServer extends EventContainer {
         options.webServerPort,
         options.webServerSSL,
         commonRequestListener,
-      )
-        .then((server) => {
-          this.rawServer = server;
-          this.fireEvent("start");
-        });
+      ).then((server) => {
+        this.rawServer = server;
+        this.emit("start");
+      });
 
       if (options.httpPortForRedirect !== undefined) {
         this.createHTTPServer(options.httpPortForRedirect, (req, res) => {
@@ -78,7 +79,7 @@ export default class WebServer extends EventContainer {
         this.renewCertbot();
       }
 
-      // 매일 새로 불러옴
+      // renew certbot every 24 hours
       setInterval(() => {
         this.loadSecureContext(options.webServerSSL!);
         if (options.autoRenewCertbot === true) {
@@ -90,7 +91,7 @@ export default class WebServer extends EventContainer {
         options.webServerPort,
         commonRequestListener,
       );
-      this.fireEvent("start");
+      this.emit("start");
     }
   }
 

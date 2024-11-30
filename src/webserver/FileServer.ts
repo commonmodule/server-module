@@ -1,5 +1,5 @@
 import * as Path from "path";
-import FileUtil from "../util/FileUtil.js";
+import FileUtil from "../utils/FileUtil.js";
 import HttpContext from "./HttpContext.js";
 import WebServer, { WebServerOptions } from "./WebServer.js";
 import content_types from "./content_types.json" assert { type: "json" };

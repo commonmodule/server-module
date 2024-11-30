@@ -1,7 +1,7 @@
 import * as HTTP from "http";
 import * as ZLib from "zlib";
-import Logger from "../util/Logger.js";
-import UriParser from "../util/UriParser.js";
+import Logger from "../utils/Logger.js";
+import UriParser from "../utils/UriParser.js";
 import ErrorCode from "./ErrorCode.js";
 import SuccessCode from "./SuccessCode.js";
 import { ViewParams } from "./View.js";
