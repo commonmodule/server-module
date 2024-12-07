@@ -25,7 +25,7 @@ export default class FileServer extends WebServer {
       if (context.responsed !== true) {
         const filename = Path.basename(context.uri);
         if (filename.startsWith(".")) {
-          console.log(
+          console.warn(
             `WARNING: ${context.ip} tried to access a hidden file: ${filename}`,
           );
           await context.response({
@@ -34,7 +34,7 @@ export default class FileServer extends WebServer {
               `WARNING: Your IP address ${context.ip} has been logged and reported for suspicious activity. Any further attempts to breach our security will be met with serious legal consequences. Please cease and desist immediately.`,
           });
         } else if (context.uri.includes("..") === true) {
-          console.log(
+          console.warn(
             `WARNING: ${context.ip} tried to access a file outside of the public folder.`,
           );
           await context.response({

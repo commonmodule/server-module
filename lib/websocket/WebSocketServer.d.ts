@@ -1,19 +1,13 @@
 /// <reference types="node" />
+import { ChannelManager } from "@common-module/ts";
 import * as HTTP from "http";
-import { WebSocket } from "ws";
 import WebServer from "../webserver/WebServer.js";
-declare class Client {
-    private socket;
-    private request;
-    constructor(socket: WebSocket, request: HTTP.IncomingMessage);
-}
-export default class WebSocketServer {
+export default class WebSocketServer<H extends Record<string, (...args: any[]) => any>> {
     private webServer;
     private handler;
-    private clients;
-    constructor(webServer: WebServer, handler: (client: Client) => void);
+    private channelManagers;
+    constructor(webServer: WebServer, handler: (channelManager: ChannelManager<H>, request: HTTP.IncomingMessage) => void);
     private launch;
-    private onConn;
+    private onConnection;
 }
-export {};
 //# sourceMappingURL=WebSocketServer.d.ts.map
