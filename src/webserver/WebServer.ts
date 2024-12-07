@@ -4,7 +4,7 @@ import * as HTTP from "http";
 import * as HTTPS from "https";
 import * as TLS from "tls";
 import { SecureContext } from "tls";
-import FileUtil from "../utils/FileUtil.js";
+import FileUtils from "../utils/FileUtils.js";
 import Logger from "../utils/Logger.js";
 import HttpContext from "./HttpContext.js";
 
@@ -100,8 +100,8 @@ export default class WebServer extends EventContainer<{
     for (const [domain, c] of Object.entries(ssl)) {
       promises.push((async () => {
         this.secureContextCache[domain] = TLS.createSecureContext({
-          key: await FileUtil.readBuffer(c.key),
-          cert: await FileUtil.readBuffer(c.cert),
+          key: await FileUtils.readBuffer(c.key),
+          cert: await FileUtils.readBuffer(c.cert),
         }).context;
       })());
     }

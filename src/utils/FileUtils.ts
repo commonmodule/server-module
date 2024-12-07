@@ -1,7 +1,7 @@
 import * as FS from "fs";
 import * as Path from "path";
 
-class FileUtil {
+class FileUtils {
   public async checkFileExists(path: string): Promise<boolean> {
     if (path === "./") {
       return true;
@@ -161,4 +161,4 @@ class FileUtil {
   }
 }
 
-export default new FileUtil();
+export default new FileUtils();

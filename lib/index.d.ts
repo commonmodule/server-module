@@ -1,4 +1,4 @@
-export { default as FileUtil } from "./utils/FileUtil.js";
+export { default as FileUtils } from "./utils/FileUtils.js";
 export { default as content_types } from "./webserver/content_types.json";
 export { default as FileServer } from "./webserver/FileServer.js";
 export { default as HttpContext } from "./webserver/HttpContext.js";

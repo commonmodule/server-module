@@ -1,5 +1,5 @@
 import * as Path from "path";
-import FileUtil from "../utils/FileUtil.js";
+import FileUtils from "../utils/FileUtils.js";
 import HttpContext from "./HttpContext.js";
 import WebServer, { WebServerOptions } from "./WebServer.js";
 import content_types from "./content_types.json" assert { type: "json" };
@@ -65,13 +65,13 @@ export default class FileServer extends WebServer {
   private async responseResource(context: HttpContext) {
     try {
       const contentType = FileServer.contentTypeFromPath(context.uri);
-      const content = await FileUtil.readBuffer(
+      const content = await FileUtils.readBuffer(
         `${this.publicFolderPath}/${context.uri}`,
       );
       await context.response({ content, contentType });
     } catch (error) {
       try {
-        const indexFileContent = await FileUtil.readText(
+        const indexFileContent = await FileUtils.readText(
           `${this.publicFolderPath}/${
             this.options.indexFilePath === undefined
               ? "index.html"
