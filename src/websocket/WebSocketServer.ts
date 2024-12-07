@@ -1,4 +1,4 @@
-import { ChannelManager, RealtimeClient } from "@common-module/ts";
+import { MessageChannelManager, RealtimeClient } from "@common-module/ts";
 import * as HTTP from "http";
 import { WebSocket, WebSocketServer as WSWebSocketServer } from "ws";
 import Logger from "../utils/Logger.js";
@@ -27,12 +27,12 @@ class Client implements RealtimeClient {
 export default class WebSocketServer<
   H extends Record<string, (...args: any[]) => any>,
 > {
-  private channelManagers: ChannelManager<H>[] = [];
+  private channelManagers: MessageChannelManager<H>[] = [];
 
   constructor(
     private webServer: WebServer,
     private handler: (
-      channelManager: ChannelManager<H>,
+      channelManager: MessageChannelManager<H>,
       request: HTTP.IncomingMessage,
     ) => void,
   ) {
@@ -54,7 +54,7 @@ export default class WebSocketServer<
   }
 
   private onConnection(socket: WebSocket, request: HTTP.IncomingMessage) {
-    const channelManager = new ChannelManager(new Client(socket));
+    const channelManager = new MessageChannelManager(new Client(socket));
     this.channelManagers.push(channelManager);
     this.handler(channelManager, request);
   }
