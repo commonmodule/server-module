@@ -5,7 +5,7 @@ import UriParser from "../utils/UriParser.js";
 import ErrorCode from "./ErrorCode.js";
 import SuccessCode from "./SuccessCode.js";
 import { ViewParams } from "./View.js";
-import encodings from "./encodings.json" assert { type: "json" };
+import encodings from "./encodings.json" with { type: "json" };
 
 type Headers = { [name: string]: string | string[] };
 

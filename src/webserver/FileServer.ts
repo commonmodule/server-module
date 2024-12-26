@@ -2,7 +2,7 @@ import * as Path from "path";
 import FileUtils from "../utils/FileUtils.js";
 import HttpContext from "./HttpContext.js";
 import WebServer, { WebServerOptions } from "./WebServer.js";
-import content_types from "./content_types.json" assert { type: "json" };
+import content_types from "./content_types.json" with { type: "json" };
 
 export default class FileServer extends WebServer {
   public static contentTypeFromPath(path: string): string {
