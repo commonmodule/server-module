@@ -48,9 +48,9 @@ export default class WebServer extends EventContainer<{
 
       try {
         await listener(context);
-      } catch (error) {
+      } catch (error: any) {
         Logger.error(error);
-        context.responseError("Internal Server Error");
+        context.responseError(`Internal Server Error: ${error}`);
       }
     };
 
