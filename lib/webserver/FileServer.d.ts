@@ -2,7 +2,7 @@ import HttpContext from "./HttpContext.js";
 import WebServer, { WebServerOptions } from "./WebServer.js";
 export default class FileServer extends WebServer {
     private options;
-    static contentTypeFromPath(path: string): string;
+    static contentTypeFromPath(_path: string): string;
     private publicFolderPath;
     constructor(options: WebServerOptions & {
         publicFolderPath?: string;

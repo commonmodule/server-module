@@ -1,17 +1,16 @@
 import { EventContainer } from "@common-module/ts";
 import { exec } from "child_process";
-import * as HTTP from "http";
-import * as HTTPS from "https";
-import * as TLS from "tls";
-import { SecureContext } from "tls";
-import FileUtils from "../utils/FileUtils.js";
+import fs from "fs/promises";
+import http, { IncomingMessage, ServerResponse } from "http";
+import https from "https";
+import tls, { SecureContext } from "tls";
 import Logger from "../utils/Logger.js";
 import HttpContext from "./HttpContext.js";
 
 type SSLInfo = { [domain: string]: { key: string; cert: string } };
 type RequestListener = (
-  req: HTTP.IncomingMessage,
-  res: HTTP.ServerResponse,
+  req: IncomingMessage,
+  res: ServerResponse,
 ) => void;
 
 export interface WebServerOptions {
@@ -25,7 +24,7 @@ export default class WebServer extends EventContainer<{
   start: () => void;
 }> {
   private secureContextCache: { [domain: string]: SecureContext } = {};
-  public rawServer: HTTPS.Server | HTTP.Server | undefined;
+  public rawServer: https.Server | http.Server | undefined;
 
   constructor(
     options: WebServerOptions,
@@ -99,9 +98,9 @@ export default class WebServer extends EventContainer<{
     const promises: Promise<void>[] = [];
     for (const [domain, c] of Object.entries(ssl)) {
       promises.push((async () => {
-        this.secureContextCache[domain] = TLS.createSecureContext({
-          key: await FileUtils.readBuffer(c.key),
-          cert: await FileUtils.readBuffer(c.cert),
+        this.secureContextCache[domain] = tls.createSecureContext({
+          key: await fs.readFile(c.key),
+          cert: await fs.readFile(c.cert),
         }).context;
       })());
     }
@@ -114,7 +113,7 @@ export default class WebServer extends EventContainer<{
     requestListener: RequestListener,
   ) {
     await this.loadSecureContext(ssl);
-    const server = HTTPS.createServer({
+    const server = https.createServer({
       SNICallback: (domain, callback) =>
         callback(null, this.secureContextCache[domain]),
     }, requestListener).listen(port);
@@ -124,7 +123,7 @@ export default class WebServer extends EventContainer<{
   }
 
   private createHTTPServer(port: number, requestListener: RequestListener) {
-    const server = HTTP.createServer(requestListener).listen(port);
+    const server = http.createServer(requestListener).listen(port);
     server.on("error", (error) => Logger.error(error));
     Logger.success(`web server running... http://localhost:${port}`);
     return server;

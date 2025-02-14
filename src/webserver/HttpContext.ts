@@ -1,5 +1,5 @@
-import * as HTTP from "http";
-import * as ZLib from "zlib";
+import { IncomingMessage, ServerResponse } from "http";
+import zlib from "zlib";
 import Logger from "../utils/Logger.js";
 import UriParser from "../utils/UriParser.js";
 import ErrorCode from "./ErrorCode.js";
@@ -14,7 +14,7 @@ interface ResponseOptions {
   statusCode?: number;
   contentType?: string;
   encoding?: BufferEncoding;
-  content?: string | Buffer;
+  content?: string | ArrayBuffer;
 }
 
 export default class HttpContext {
@@ -26,10 +26,7 @@ export default class HttpContext {
 
   public responsed = false;
 
-  constructor(
-    private req: HTTP.IncomingMessage,
-    private res: HTTP.ServerResponse,
-  ) {}
+  constructor(private req: IncomingMessage, public res: ServerResponse) {}
 
   public get uri() {
     if (this._uri === undefined) {
@@ -176,7 +173,7 @@ export default class HttpContext {
       this.acceptEncoding.match(/\bgzip\b/) !== null
     ) {
       headers["Content-Encoding"] = "gzip";
-      ZLib.gzip(content, (error, buffer) => {
+      zlib.gzip(content, (error, buffer) => {
         if (error !== null) {
           Logger.error(error, this.req);
         } else {

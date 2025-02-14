@@ -1,8 +1,8 @@
 /// <reference types="node" />
 /// <reference types="node" />
 import { EventContainer } from "@common-module/ts";
-import * as HTTP from "http";
-import * as HTTPS from "https";
+import http from "http";
+import https from "https";
 import HttpContext from "./HttpContext.js";
 type SSLInfo = {
     [domain: string]: {
@@ -20,7 +20,7 @@ export default class WebServer extends EventContainer<{
     start: () => void;
 }> {
     private secureContextCache;
-    rawServer: HTTPS.Server | HTTP.Server | undefined;
+    rawServer: https.Server | http.Server | undefined;
     constructor(options: WebServerOptions, listener: (context: HttpContext) => Promise<void>);
     private loadSecureContext;
     private createHTTPSServer;

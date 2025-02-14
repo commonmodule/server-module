@@ -1,5 +1,5 @@
 import { MessageChannelManager, RealtimeClient } from "@common-module/ts";
-import * as HTTP from "http";
+import { IncomingMessage } from "http";
 import { WebSocket, WebSocketServer as WSWebSocketServer } from "ws";
 import Logger from "../utils/Logger.js";
 import WebServer from "../webserver/WebServer.js";
@@ -33,7 +33,7 @@ export default class WebSocketServer<
     private webServer: WebServer,
     private handler: (
       channelManager: MessageChannelManager<H>,
-      request: HTTP.IncomingMessage,
+      request: IncomingMessage,
     ) => void,
   ) {
     if (webServer.rawServer === undefined) {
@@ -53,7 +53,7 @@ export default class WebSocketServer<
     Logger.success("websocket server running...");
   }
 
-  private onConnection(socket: WebSocket, request: HTTP.IncomingMessage) {
+  private onConnection(socket: WebSocket, request: IncomingMessage) {
     const channelManager = new MessageChannelManager(new Client(socket));
     this.channelManagers.push(channelManager);
     this.handler(channelManager, request);

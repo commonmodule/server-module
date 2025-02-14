@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import * as HTTP from "http";
+import { IncomingMessage, ServerResponse } from "http";
 import SuccessCode from "./SuccessCode.js";
 import { ViewParams } from "./View.js";
 type Headers = {
@@ -11,21 +11,21 @@ interface ResponseOptions {
     statusCode?: number;
     contentType?: string;
     encoding?: BufferEncoding;
-    content?: string | Buffer;
+    content?: string | ArrayBuffer;
 }
 export default class HttpContext {
     private req;
-    private res;
+    res: ServerResponse;
     private _uri;
     private _ip;
     private _params;
     private _cookie;
     private _acceptEncoding;
     responsed: boolean;
-    constructor(req: HTTP.IncomingMessage, res: HTTP.ServerResponse);
+    constructor(req: IncomingMessage, res: ServerResponse);
     get uri(): string;
     get method(): string | undefined;
-    get headers(): HTTP.IncomingHttpHeaders;
+    get headers(): import("http").IncomingHttpHeaders;
     get ip(): string;
     get params(): {
         [name: string]: string;
