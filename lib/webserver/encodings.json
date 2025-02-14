@@ -2,7 +2,7 @@
     "application/javascript": "utf-8",
     "text/javascript": "utf-8",
     "application/json": "utf-8",
-    "application/wasm": "utf-8",
+    "application/wasm": "binary",
     "text/css": "utf-8",
     "text/plain": "utf-8",
     "text/x-markdown": "utf-8",
