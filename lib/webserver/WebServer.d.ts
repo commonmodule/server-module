@@ -1,6 +1,4 @@
-/// <reference types="node" />
-/// <reference types="node" />
-import { EventContainer } from "@common-module/ts";
+import { EventContainer } from "@commonmodule/ts";
 import http from "http";
 import https from "https";
 import HttpContext from "./HttpContext.js";

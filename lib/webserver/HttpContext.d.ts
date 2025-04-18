@@ -1,5 +1,3 @@
-/// <reference types="node" />
-/// <reference types="node" />
 import { IncomingMessage, ServerResponse } from "http";
 import SuccessCode from "./SuccessCode.js";
 import { ViewParams } from "./View.js";

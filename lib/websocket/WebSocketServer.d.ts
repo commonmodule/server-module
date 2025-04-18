@@ -1,5 +1,4 @@
-/// <reference types="node" />
-import { MessageChannelManager } from "@common-module/ts";
+import { MessageChannelManager } from "@commonmodule/ts";
 import { IncomingMessage } from "http";
 import WebServer from "../webserver/WebServer.js";
 export default class WebSocketServer<H extends Record<string, (...args: any[]) => any>> {

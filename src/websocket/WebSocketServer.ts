@@ -1,4 +1,4 @@
-import { MessageChannelManager, RealtimeClient } from "@common-module/ts";
+import { MessageChannelManager, RealtimeClient } from "@commonmodule/ts";
 import { IncomingMessage } from "http";
 import { WebSocket, WebSocketServer as WSWebSocketServer } from "ws";
 import Logger from "../utils/Logger.js";

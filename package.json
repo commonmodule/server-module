@@ -1,5 +1,5 @@
 {
-  "name": "@common-module/server",
+  "name": "@commonmodule/server",
   "author": "yj.gaia",
   "homepage": "https://yj.dev",
   "version": "0.1.7",
@@ -7,11 +7,11 @@
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
   "dependencies": {
-    "@common-module/ts": "^0.1.7",
-    "ws": "^8.18.0"
+    "@commonmodule/ts": "^0.1.9",
+    "ws": "^8.18.1"
   },
   "devDependencies": {
-    "@types/node": "^20.14.5",
-    "@types/ws": "^8.5.13"
+    "@types/node": "^22.14.1",
+    "@types/ws": "^8.18.1"
   }
 }
